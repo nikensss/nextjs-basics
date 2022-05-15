@@ -23,24 +23,32 @@ export default function Car({ car }) {
   );
 }
 
-// will run before the page is rendered and the results will be passed to the
-// component in this file
-export const getStaticProps = async ({ params }) => {
+// for server side rendering, meaning it will run on every request
+export const getServerSideProps = async ({ params }) => {
   const req = await fetch(`http://localhost:3000/${params.id}.json`);
   const car = await req.json();
 
   return { props: { car } };
 };
 
+// will run before the page is rendered and the results will be passed to the
+// component in this file
+// export const getStaticProps = async ({ params }) => {
+//   const req = await fetch(`http://localhost:3000/${params.id}.json`);
+//   const car = await req.json();
+
+//   return { props: { car } };
+// };
+
 // tells next which dunamic pages to render
-export const getStaticPaths = async () => {
-  const req = await fetch('http://localhost:3000/cars.json');
-  const data = await req.json();
-  console.log({ data });
+// export const getStaticPaths = async () => {
+//   const req = await fetch('http://localhost:3000/cars.json');
+//   const data = await req.json();
+//   console.log({ data });
 
-  const paths = data.map((id) => {
-    return { params: { id } };
-  });
+//   const paths = data.map((id) => {
+//     return { params: { id } };
+//   });
 
-  return { paths, fallback: false };
-};
+//   return { paths, fallback: false };
+// };
